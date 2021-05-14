@@ -33,7 +33,7 @@ namespace StandardCalculator
         private void _calculator_KeyPress(object sender, KeyPressEventArgs e)
         {
             
-            switch (e.KeyChar)
+            switch (e.KeyChar) //Depending on which key was pressed to enter it's value
             {
                 case '0':
                     e.Handled = true;
@@ -79,10 +79,10 @@ namespace StandardCalculator
             }
             
         }
-
-        private void bttBackSpace_Click(object sender, EventArgs e)
+        
+        private void bttBackSpace_Click(object sender, EventArgs e) //Deleting last number with BackSpace
         {
-            if (txtResult.Text != string.Empty)
+            if (txtResult.Text != string.Empty) 
             {
                 int inputlength = txtResult.Text.Length;
                 if( inputlength != 0)
@@ -99,10 +99,7 @@ namespace StandardCalculator
             }
         }
 
-        private void lbl1_Click(object sender, EventArgs e)
-        {
-            
-        }
+        
 
         private void _calculator_Load(object sender, EventArgs e)
         {
@@ -110,7 +107,7 @@ namespace StandardCalculator
            
         }
 
-        private void bttCE_Click(object sender, EventArgs e)
+        private void bttCE_Click(object sender, EventArgs e) //deleting the last input 
         {
          
             
@@ -119,7 +116,7 @@ namespace StandardCalculator
            
         }
 
-        private void bttClear_Click(object sender, EventArgs e)
+        private void bttClear_Click(object sender, EventArgs e) // clear button
         {
             txtResult.Text = "";
             lblInputs.Text = String.Empty;
@@ -150,9 +147,10 @@ namespace StandardCalculator
 
         }
     
-        private void Operator_Pressed(object sender, EventArgs e)
+        private void Operator_Pressed(object sender, EventArgs e) // Operators'event to identify which operator was pressed from the calculator
         {
-            // An operator was pressed; perform the last operation and store the new operator.
+            
+            
             char operation = (sender as Button).Text[0];
 
             string msg = "Cannot divide by 0!";
@@ -190,7 +188,7 @@ namespace StandardCalculator
             if (operation == '=')
             {
 
-                if (double.IsPositiveInfinity(tempAccum) || double.IsNegativeInfinity(tempAccum))
+                if (double.IsPositiveInfinity(tempAccum) || double.IsNegativeInfinity(tempAccum)) //if a number was divided by 0,isntead of dispaying Infinity,display a message.
                 {
                     txtResult.Text = msg;
                 }
@@ -216,12 +214,12 @@ namespace StandardCalculator
 
                  lblInputs.Text += operation;
             }
-            //txtResult.Text = operation == '=' ? tempAccum.ToString() : "0";
+            
         }
 
-        private void Number_Pressed(object sender, EventArgs e)
+        private void Number_Pressed(object sender, EventArgs e) //Event for pressed numbers which will be displayed
         {
-            // Add it to the display.
+            
             string number = (sender as Button).Text;
             txtResult.Text = txtResult.Text == "0" ? number : txtResult.Text + number;
         }
@@ -233,66 +231,20 @@ namespace StandardCalculator
            
         }
 
-        private void operatos_click(object sender, EventArgs e)
-        {
-            currentNum = Convert.ToDouble(txtResult.Text);
-            char operation = (sender as Button).Text[0];
-
-            if (lstOprtion == 'C')
-            {
-                txtResult.Text = "0";
-                tempAccum = 0;
-            }
-
-          
-            else
-            {
-                switch (lstOprtion)
-                {
-
-                    case '+':
-                        tempAccum += currentNum;
-                        break;
-                    case '-':
-                        tempAccum -= currentNum;
-                        break;
-                    case '*':
-                        tempAccum *= currentNum;
-                        break;
-                    case '/':
-                        tempAccum /= currentNum;
-                        break;
-                    case '%':
-                        tempAccum = (tempAccum * (currentNum / 100));
-                        break;
-                    case '√':
-                        tempAccum = Math.Sqrt(tempAccum);
-                        break;
-                    default: tempAccum = currentNum; break;
-                }
-                
-            }
-            lstOprtion = operation;
-            txtResult.Text = operation == '=' ? tempAccum.ToString() : "0";
-
-
-
-
-
-        }
+       
 
         private void result_click(object sender, EventArgs e)
         {
             txtResult.Text = tempAccum.ToString();
         }
 
-        private void memorybtns_click(object sender, EventArgs e)
+        private void memorybtns_click(object sender, EventArgs e) //Event for memory buttons
         {
             result = tempAccum;
             Button btnMemory = (Button)sender;
             string btnText = btnMemory.Text;
             
-            //  txtResult.Text = btnText ==( ("MS") ||( "M-")||("M+")) ? tempAccum.ToString() : "0";
+           
 
 
             if (btnText == "MS")
@@ -308,7 +260,7 @@ namespace StandardCalculator
 
             else if (btnText == "M-")
             {
-                // Memory subtract
+               
                 memoryStore -= result;
                 txtResult.Text = memoryStore.ToString();
                 txtResult.Text = "0";
@@ -317,7 +269,7 @@ namespace StandardCalculator
 
             else if (btnText == "M+")
             {
-                // Memory add 
+               
 
                 memoryStore += result;
                 txtResult.Text = memoryStore.ToString();
@@ -329,7 +281,7 @@ namespace StandardCalculator
            
             else if (btnText == "MC")
             {
-                //Memory Clear
+                
                 this.memoryStore = 0;
                 bttMC.Enabled = false;
                  bttMR.Enabled = false;
@@ -354,7 +306,7 @@ namespace StandardCalculator
 
         }
 
-        private void button6_Click(object sender, EventArgs e)
+        private void button6_Click(object sender, EventArgs e) // adding decimal point
         {
             if (txtResult.Text.Contains("."))
             {
@@ -369,7 +321,7 @@ namespace StandardCalculator
 
         }
 
-        private void button15_Click(object sender, EventArgs e)
+        private void button15_Click(object sender, EventArgs e) //dividing 1 by the number
         {
             if (txtResult.Text != string.Empty)
             {
@@ -381,34 +333,34 @@ namespace StandardCalculator
 
         }
 
-        private void _calculator_KeyDown(object sender, KeyEventArgs e)
+        private void _calculator_KeyDown(object sender, KeyEventArgs e) //Event for keyboard opeator keys
         {
-            if ((Control.ModifierKeys == Keys.Shift && e.KeyCode == Keys.D8)|| (Control.ModifierKeys == Keys.Shift && e.KeyCode == Keys.Multiply))
+            if ((Control.ModifierKeys == Keys.Shift && e.KeyCode == Keys.D8)|| ( e.KeyCode == Keys.Multiply)) //implementation of the multiply operator
             {
                 e.Handled = true;
                 bttMultyplication.PerformClick();
             }
-            else if((Control.ModifierKeys == Keys.Shift && e.KeyCode == Keys.Divide) || (Control.ModifierKeys == Keys.Shift && e.KeyCode == Keys.OemQuestion))
+            else if( e.KeyCode == Keys.Divide || e.KeyCode == Keys.OemQuestion)//implementation of the devision operator
             {
                 e.Handled = true;
                 bttDevision.PerformClick();
             }
-            else if ((Control.ModifierKeys == Keys.Shift && e.KeyCode == Keys.Add) || (Control.ModifierKeys == Keys.Shift && e.KeyCode == Keys.Oemplus))
+            else if ( e.KeyCode == Keys.Add || e.KeyCode == Keys.Oemplus)//implementation of the additon operator
             {
                 e.Handled = true;
                 bttAddition.PerformClick();
             }
-            else if ((Control.ModifierKeys == Keys.Shift && e.KeyCode == Keys.Subtract) || (Control.ModifierKeys == Keys.Shift && e.KeyCode == Keys.OemMinus))
+            else if (e.KeyCode == Keys.Subtract || e.KeyCode == Keys.OemMinus)//implementation of the substraction operator
             {
                 e.Handled = true;
                 bttSubstraction.PerformClick();
             }
-            else if (Control.ModifierKeys == Keys.Enter)
+            else if (Control.ModifierKeys == Keys.Enter)//implementation of the enter key
             {
                 e.Handled = true;
                 bttResult.PerformClick();
             }
-            else if (e.KeyCode == Keys.Back)
+            else if (e.KeyCode == Keys.Back)//implementation of the backspace 
             {
                 if (txtResult.Text != string.Empty)
                 {
@@ -426,7 +378,7 @@ namespace StandardCalculator
                 }
               
             }
-            else if (e.KeyCode == Keys.Delete)
+            else if (e.KeyCode == Keys.Delete)//implementation of the delete operator
             {
                 e.Handled = true;
                 bttClear.PerformClick();
@@ -445,7 +397,7 @@ namespace StandardCalculator
             }
         }
 
-        private void bttPowr(object sender, EventArgs e)
+        private void bttPowr(object sender, EventArgs e)// x^2 operator
         {
 
             if (txtResult.Text != string.Empty)
